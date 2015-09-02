@@ -5,6 +5,7 @@
 #include "map/XMap.h"
 #include "net/LoginConn.h"
 #include "being/XLocalPlayer.h"
+#include <tmxparser/Tmx.h>
 
 namespace globals
 {

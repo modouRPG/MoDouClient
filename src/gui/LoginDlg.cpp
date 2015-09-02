@@ -57,11 +57,11 @@ namespace modou
             strcpy(pkg.email, u.c_str());
             strcpy(pkg.pass, p.c_str());
             globals::loginConn->Send(&pkg);
-	    gcn::Container *const top = static_cast<gcn::Container *>(globals::gui->getTop());
-	    WorldSelectDlg *wsDlg = new WorldSelectDlg();
-	    top->remove(this);
-	    top->add(wsDlg, (top->getWidth() - this->getWidth()) / 2, (top->getHeight() - this->getHeight())/2);
-	    //            mGame = new Game();
+	    //gcn::Container *const top = static_cast<gcn::Container *>(globals::gui->getTop());
+	    //WorldSelectDlg *wsDlg = new WorldSelectDlg();
+	    //top->remove(this);
+	    //top->add(wsDlg, (top->getWidth() - this->getWidth()) / 2, (top->getHeight() - this->getHeight())/2);
+	    mGame = new Game();
         } else if (eventId == "register") {
 
         }

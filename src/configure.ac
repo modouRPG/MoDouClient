@@ -22,6 +22,7 @@ AC_CHECK_LIB([SDL_image], [IMG_LoadPNG_RW])
 AC_CHECK_LIB([SDL_ttf], [TTF_Quit])
 AC_CHECK_LIB([guichan], [main])
 AC_CHECK_LIB([guichan_sdl], [main])
+AC_CHECK_LIB([tmxparser], [main])
 
 # Checks for header files.
 AC_CHECK_HEADERS([SDL.h])
