@@ -22,8 +22,8 @@ MoDouClient
     
 ChangeLog
 =========
-V1 
 1. 初始化依赖的库，实现登录窗口。
+1. 2015-09-04 support tmx map file. 
 
 地图实现
 ========
