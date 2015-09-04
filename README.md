@@ -7,7 +7,7 @@ MoDouClient
 ========
     sudo apt-get install libsdl1.2-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev libzip-dev libtinyxml2-dev libguichan-dev
     tmx 地图文件解析库：
-    https://github.com/andrewrk/tmxparser
+    https://github.com/modouRPG/xtmxparser
 
 编译
 =======
