@@ -1,9 +1,9 @@
 #ifndef _XACTOR_H_
 #define _XACTOR_H_
 #include <guichan.hpp>
-#include "map/XMap.h"
+#include "map/TmxMap.h"
 #include "XVector.h"
-#include "being/XActor.h"
+//#include "being/XActor.h"
 
 namespace modou
 {
@@ -13,7 +13,7 @@ namespace modou
             XActor();
             virtual ~XActor();
 
-            void setMap(XMap *map);
+            void setMap(TmxMap *map);
             int getWidth() const
             { return mWidth; }
             int getHeight() const
@@ -37,7 +37,7 @@ namespace modou
 
             std::string name;
         protected:
-            XMap *mMap;
+            TmxMap *mMap;
             XVector mPos;
     };
 }

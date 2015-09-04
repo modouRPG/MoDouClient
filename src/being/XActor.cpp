@@ -8,12 +8,12 @@ namespace modou
     XActor::~XActor()
     {}
 
-    void XActor::setMap(XMap *map)
+    void XActor::setMap(TmxMap *map)
     {
         //TODO: if mMap if not null. need remove actor from mMap first.
         mMap = map;
         if (mMap) {
-            mMap->addActor(this);
+            mMap->setActor(this);
         }
     }
 }

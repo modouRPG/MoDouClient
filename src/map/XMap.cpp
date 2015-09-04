@@ -52,7 +52,6 @@ namespace modou
         // draw text
         graphics->drawText(name, 800/2, 80, gcn::Graphics::CENTER);
 
-
     }
 
     XMap::~XMap()

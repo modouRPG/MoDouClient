@@ -2,6 +2,7 @@
 #define _XVIEWPORT_H_
 #include <guichan.hpp>
 #include "map/XMap.h"
+#include "map/TmxMap.h"
 
 namespace modou
 {
@@ -13,8 +14,8 @@ namespace modou
             virtual ~XViewport();
 
             void draw(gcn::Graphics *graphics);
-            void setMap(XMap *map);
-            XMap *mMap;
+            void setMap(TmxMap *map);
+            TmxMap *mMap;
 
             void mousePressed(gcn::MouseEvent &event);
 

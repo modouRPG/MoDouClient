@@ -5,6 +5,7 @@
 namespace modou
 {
     class XActor;
+    
     class XMapLayer 
     {
         public:

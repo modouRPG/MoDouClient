@@ -1,13 +1,13 @@
 #ifndef _XMAPREADER_H_
 #define _XMAPREADER_H_
-#include "map/XMap.h"
+#include "map/TmxMap.h"
 
 namespace modou
 {
     class XMapReader
     {
         public:
-            static XMap* readMap(std::string file_path);
+            static TmxMap* readMap(std::string file_path);
     };
 }
 

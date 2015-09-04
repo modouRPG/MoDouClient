@@ -28,6 +28,8 @@ modou_SOURCES=main.cpp \
 	map/XMap.cpp \
 	map/XMapLayer.h \
 	map/XMapLayer.cpp \
+	map/TmxMap.h \
+	map/TmxMap.cpp \
 	being/XLocalPlayer.h \
 	being/XLocalPlayer.cpp \
 	XVector.h \

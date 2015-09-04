@@ -8,8 +8,8 @@ namespace modou
 {
     XViewport::XViewport() : gcn::Container(),
         mMap(NULL),
-        mPixelViewX(512),
-        mPixelViewY(384)
+        mPixelViewX(0),
+        mPixelViewY(0)
     {
         addMouseListener(this);
         //mMap = new XMap(320, 240, mapTileSize, mapTileSize);
@@ -21,7 +21,7 @@ namespace modou
             delete(mMap);
     }
 
-    void XViewport::setMap(XMap *map)
+    void XViewport::setMap(TmxMap *map)
     {
         mMap = map;
     }
@@ -40,8 +40,8 @@ namespace modou
             mPixelViewY = static_cast<int>(pos.y) - screenHeight/2;
         }
         
-        const int viewMaxX = mMap->getWidth() * mMap->getTileWidth() - getWidth();
-        const int viewMaxY = mMap->getHeight() * mMap->getTileHeight() - getHeight();
+        const int viewMaxX = mMap->GetWidth() * mMap->GetTileWidth() - getWidth();
+        const int viewMaxY = mMap->GetHeight() * mMap->GetTileHeight() - getHeight();
 
         if (mPixelViewX < 0)
             mPixelViewX = 0;
@@ -52,7 +52,7 @@ namespace modou
         if (mPixelViewY > viewMaxY)
             mPixelViewY = viewMaxY;
 
-        mMap->draw(graphics, mPixelViewX, mPixelViewY);
+        mMap->draw(graphics, mPixelViewX, mPixelViewY, getWidth(), getHeight());
         gcn::SDLGraphics *g = static_cast<gcn::SDLGraphics *>(graphics);
         std::stringstream ss;
         ss << "X:" << mPixelViewX << ", Y:" << mPixelViewY;
@@ -85,8 +85,8 @@ namespace modou
             XVector pos = globals::localPlayer->getPosition();
             if (px > getWidth()/2) {
                 pos.x += mapTileSize;
-                if (pos.x > globals::map->getWidth() * mapTileSize)
-                    pos.x = globals::map->getWidth() * mapTileSize;
+                if (pos.x > globals::map->GetWidth() * mapTileSize)
+                    pos.x = globals::map->GetWidth() * mapTileSize;
             } else {
                 pos.x -= mapTileSize;
                 if (pos.x < 0)

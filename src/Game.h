@@ -2,6 +2,8 @@
 #define _GAME_H_
 #include "gui/XViewport.h"
 #include "map/XMap.h"
+#include "map/TmxMap.h"
+#include "map/XMapReader.h"
 
 namespace modou
 {

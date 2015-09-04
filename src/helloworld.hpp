@@ -34,15 +34,16 @@ namespace modou
 
         // Now we load the font used in this example.
         //font = new gcn::ImageFont("fixedfont.bmp", " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
-        font = new modou::XFont("./font/wqy-microhei.ttf", 16, 1);
+        //font = new modou::XFont("./font/wqy-microhei.ttf", 16, 1);
+        font = new modou::XFont("./font/abc.ttf", 16, 1);
         // Widgets may have a global font so we don't need to pass the
         // font object to every created widget. The global font is static.
         gcn::Widget::setGlobalFont(font);
         globals::gui->getGraphics()->setFont(font);
 
         //globals::map = new XMap(32, 24, 32, 32);
-        globals::map = XMapReader::readMap("./m1.conf");
-        globals::map->name = "平安镇";
+        //globals::map = XMapReader::readMap("./m1.conf");
+        //globals::map->name = "平安镇";
 
         desktop = new XDesktop();
         top->add(desktop);

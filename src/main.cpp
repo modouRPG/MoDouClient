@@ -8,7 +8,7 @@
 #include "helloworld.hpp"
 
 gcn::Gui *(globals::gui) = new gcn::Gui();
-modou::XMap *(globals::map) = NULL;
+modou::TmxMap *(globals::map) = NULL;
 modou::XLocalPlayer *(globals::localPlayer) = NULL;
 modou::LoginConn *(globals::loginConn) = new modou::LoginConn("127.0.0.1", 2048);
 
