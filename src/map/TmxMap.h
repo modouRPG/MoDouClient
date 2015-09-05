@@ -26,6 +26,7 @@ namespace modou
 
   private:
     std::vector< Tmx::Tile* > all_tiles;
+    std::vector< gcn::Image* > all_tiles_image;
     XActor *m_pActor;
   };
 }

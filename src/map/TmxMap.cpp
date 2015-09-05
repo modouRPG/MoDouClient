@@ -35,6 +35,7 @@ namespace modou
 	tmp_tile = tiles.at(j);
 	//all_tiles.insert(tmp_tile->GetId() + firstGid, tmp_tile);
 	all_tiles.push_back(tmp_tile);
+	all_tiles_image.push_back(gcn::Image::load(tmp_tile->GetImage()->GetSource()));
 	//	std::cout << tmp_tile->GetId() + firstGid << std::endl;
       }
     }
@@ -68,7 +69,9 @@ namespace modou
   void TmxMap::draw(gcn::Graphics *graphics, int scrollX, int scrollY, int width, int height)
   {
     int i=0, j=0, x=0, y=0;
+    int ind = 0;
     std::string color = this->GetBackgroundColor();
+    gcn::Image *gcn_image = NULL;
     
     if (!color.empty()) {
       color.replace(0, 1, "0x");
@@ -85,7 +88,10 @@ namespace modou
     	  if (tileLayer->GetTileTilesetIndex(x, y) == -1) {
     	    //	    printf("..........      ");
     	  } else {
-    	    // printf("%03d(%03d)", tileLayer->GetTileId(x, y), tileLayer->GetTileGid(x, y));
+    	    //printf("%03d(%03d)", tileLayer->GetTileId(x, y), tileLayer->GetTileGid(x, y));
+	    ind = tileLayer->GetTileGid(x, y) + tileLayer->GetTileId(x, y) - 1;
+	    gcn_image = all_tiles_image.at(ind);
+	    graphics->drawImage(gcn_image, x * 32 - scrollX, y * 32 - scrollY);
     	  }
     	}
       }
