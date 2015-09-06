@@ -17,6 +17,7 @@ namespace modou
     virtual ~TmxMap();
 
     std::string map_name;
+    int tile_width, tile_height;
 
     void loadResource();
 
@@ -24,9 +25,13 @@ namespace modou
 
     void draw(gcn::Graphics *graphics, int scrollX, int scrollY, int container_width, int container_height);
 
+    bool isBlock(int tx, int ty);
+    bool inMap(int tx, int ty);
+
   private:
     std::vector< Tmx::Tile* > all_tiles;
     std::vector< gcn::Image* > all_tiles_image;
+    std::vector< int > map_block_flag;
     XActor *m_pActor;
   };
 }

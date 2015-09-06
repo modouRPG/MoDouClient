@@ -27,6 +27,9 @@ namespace modou
     std::vector< Tmx::Tile *> tiles;
     Tmx::Tile *tmp_tile = NULL;
 
+    tile_width = this->GetWidth();
+    tile_height = this->GetHeight();
+
     for(i=0; i< this->GetNumTilesets(); i++) {
       const Tmx::Tileset *tileset = this->GetTileset(i);
       firstGid = tileset->GetFirstGid();
@@ -40,19 +43,21 @@ namespace modou
       }
     }
 
-    // for(i=0; i< this->GetNumTileLayers(); i++) {
-    //   const Tmx::TileLayer *tileLayer = this->GetTileLayer(i);
-    //   for(y=0; y<tileLayer->GetHeight(); y++) {
-    // 	for(x =0; x< tileLayer->GetWidth(); x++) {
-    // 	  if (tileLayer->GetTileTilesetIndex(x, y) == -1) {
-    // 	    //	    printf("..........      ");
-    // 	  } else {
-    // 	    // printf("%03d(%03d)", tileLayer->GetTileId(x, y), tileLayer->GetTileGid(x, y));
-    // 	  }
-    // 	}
-    //   }
-    //   // printf("\n");
-    // }
+    for(i=0; i< this->GetNumTileLayers(); i++) {
+      const Tmx::TileLayer *tileLayer = this->GetTileLayer(i);
+      if (tileLayer->GetName() != "block") {
+	continue;
+      }
+      for(y=0; y<tileLayer->GetHeight(); y++) {
+    	for(x =0; x< tileLayer->GetWidth(); x++) {
+    	  if (tileLayer->GetTileTilesetIndex(x, y) == -1) {
+	    map_block_flag.push_back(0);
+    	  } else {
+	    map_block_flag.push_back(1);
+    	  }
+    	}
+      }
+    }
 
     // for (i=0; i< this->GetNumObjectGroups(); i++) {
     //   const Tmx::ObjectGroup *objectGroup = this->GetObjectGroup(i);
@@ -64,6 +69,29 @@ namespace modou
     // 	//        object->GetGid());
     //   }
     // }
+  }
+
+  bool TmxMap::isBlock(int tx, int ty)
+  {
+    int ind = 0;
+
+    ind = ty * 100 + tx;
+    if (map_block_flag.at(ind) == 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  bool TmxMap::inMap(int tx, int ty)
+  {
+    if (tx < 0 || tx >= tile_width) {
+      return false;
+    }
+    if (ty < 0 || ty >= tile_height) {
+      return false;
+    }
+    return true;
   }
 
   void TmxMap::draw(gcn::Graphics *graphics, int scrollX, int scrollY, int width, int height)
@@ -83,19 +111,22 @@ namespace modou
     
     for(i=0; i< this->GetNumTileLayers(); i++) {
       const Tmx::TileLayer *tileLayer = this->GetTileLayer(i);
+      if (tileLayer->GetName() == "block") {
+	continue;
+      }
       for(y=0; y<tileLayer->GetHeight(); y++) {
     	for(x =0; x< tileLayer->GetWidth(); x++) {
-    	  if (tileLayer->GetTileTilesetIndex(x, y) == -1) {
-    	    //	    printf("..........      ");
-    	  } else {
-    	    //printf("%03d(%03d)", tileLayer->GetTileId(x, y), tileLayer->GetTileGid(x, y));
-	    ind = tileLayer->GetTileGid(x, y) + tileLayer->GetTileId(x, y) - 1;
+	  if (tileLayer->GetTileTilesetIndex(x, y) == -1) {
+	    //	    printf("..........      ");
+	  } else {
+	    //printf("%03d(%03d)", tileLayer->GetTileId(x, y), tileLayer->GetTileGid(x, y));
+	    //	    ind = tileLayer->GetTileGid(x, y) + tileLayer->GetTileId(x, y) - 1;
+	    ind = tileLayer->GetTileGid(x, y) - 1;
 	    gcn_image = all_tiles_image.at(ind);
 	    graphics->drawImage(gcn_image, x * 32 - scrollX, y * 32 - scrollY);
-    	  }
+	  }
     	}
       }
-      // printf("\n");
     }
 
     for (i=0; i< this->GetNumObjectGroups(); i++) {

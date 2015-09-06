@@ -1,5 +1,6 @@
 #include "XLocalPlayer.h"
 #include <guichan/sdl.hpp>
+#include <sstream>
 #include "main.h"
 
 namespace modou
@@ -27,6 +28,9 @@ namespace modou
             py = 0;
 
         g->drawImage(gcn::Image::load("./data/img/aa2186.png", true), px, py);
+	std::stringstream ss;
+	ss << "Player X: " << px << ", Y: " << py;
+	g->drawText(ss.str(), 0, 20);
         //g->setColor(gcn::Color(255, 0, 0, 255));
         //g->fillRectangle(gcn::Rectangle(getPixelX(), getPixelY(), 10, 10));
     }

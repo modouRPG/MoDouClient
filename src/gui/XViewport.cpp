@@ -53,10 +53,26 @@ namespace modou
             mPixelViewY = viewMaxY;
 
         mMap->draw(graphics, mPixelViewX, mPixelViewY, getWidth(), getHeight());
-        gcn::SDLGraphics *g = static_cast<gcn::SDLGraphics *>(graphics);
+	//        gcn::SDLGraphics *g = static_cast<gcn::SDLGraphics *>(graphics);
         std::stringstream ss;
         ss << "X:" << mPixelViewX << ", Y:" << mPixelViewY;
-        g->drawText(ss.str(), 0, 0);
+        graphics->drawText(ss.str(), 0, 0);
+
+	if (!path.empty()) {
+	  std::list< XTilePoint* >::iterator it;
+	  int oldx=-1, oldy=-1;
+	  for(it = path.begin(); it != path.end(); it++) {
+	    graphics->drawPoint((*it)->x * 32 - mPixelViewX, (*it)->y * 32 - mPixelViewY);
+	    if (oldx == -1) {
+	      oldx = (*it)->x;
+	      oldy = (*it)->y;
+	      continue;
+	    }
+	    //graphics->drawLine(oldx * 32 - mPixelViewX, oldy * 32 - mPixelViewY, (*it)->x * 32 - mPixelViewX, (*it)->y * 32 - mPixelViewY);
+	    oldx = (*it)->x;
+	    oldy = (*it)->y;
+	  }
+	}
     }
 
     void XViewport::mousePressed(gcn::MouseEvent &event)
@@ -83,7 +99,11 @@ namespace modou
             int px, py;
             SDL_GetMouseState(&px, &py);
             XVector pos = globals::localPlayer->getPosition();
-            if (px > getWidth()/2) {
+	    path.clear();
+	    std::cout << "init path size: " << path.size() << endl;
+	    modou::FindPath::getPath(globals::map, int(pos.x), int(pos.y), px, py, path);
+	    std::cout << "path size: " << path.size() << endl;
+            if (px > pos.x) {
                 pos.x += mapTileSize;
                 if (pos.x > globals::map->GetWidth() * mapTileSize)
                     pos.x = globals::map->GetWidth() * mapTileSize;
@@ -91,6 +111,15 @@ namespace modou
                 pos.x -= mapTileSize;
                 if (pos.x < 0)
                     pos.x = 0;
+            }
+	    if (py > pos.y) {
+                pos.y += mapTileSize;
+                if (pos.y > globals::map->GetHeight() * mapTileSize)
+                    pos.y = globals::map->GetHeight() * mapTileSize;
+            } else {
+                pos.y -= mapTileSize;
+                if (pos.y < 0)
+                    pos.y = 0;
             }
             globals::localPlayer->setPosition(pos);
             //globals::localPlayer->navigateTo(pos.x, pos.y);

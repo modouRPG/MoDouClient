@@ -3,6 +3,7 @@
 #include <guichan.hpp>
 #include "map/XMap.h"
 #include "map/TmxMap.h"
+#include "map/FindPath.h"
 
 namespace modou
 {
@@ -23,6 +24,7 @@ namespace modou
             int mPixelViewX, mPixelViewY;
             bool leftMouseAction();
             void followMouse();
+	    std::list< XTilePoint* > path;
     };
 }
 

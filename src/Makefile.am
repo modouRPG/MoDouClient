@@ -44,4 +44,9 @@ modou_SOURCES=main.cpp \
 	net/LoginConn.h \
 	net/LoginConn.cpp \
 	gui/WorldSelectDlg.h \
-	gui/WorldSelectDlg.cpp
+	gui/WorldSelectDlg.cpp \
+	map/FindPath.cpp \
+	map/FindPath.h \
+	map/XTilePoint.h \
+	map/XTilePoint.cpp 
+

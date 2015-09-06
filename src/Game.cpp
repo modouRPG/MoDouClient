@@ -9,7 +9,7 @@ namespace modou
     {
       std::string default_map = "./pinganzhen.tmx";
       globals::map = XMapReader::readMap(default_map);
-      globals::map->map_name = "pinganzhen";
+      globals::map->map_name = "平安镇";
 
       globals::localPlayer = new XLocalPlayer();
       XVector pos(100, 100, 0);
