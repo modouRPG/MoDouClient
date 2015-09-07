@@ -94,6 +94,8 @@ namespace modou
     std::list< XTilePoint* >::iterator it;
     int small = -1;
 
+    std::cout << openList.size() << std::endl;
+
     for( it = openList.begin(); it != openList.end(); it++) {
       if (small == -1 || (*it)->F < small) {
 	small = (*it)->F;
@@ -125,13 +127,12 @@ namespace modou
 
     std::list< XTilePoint* > openList, childrenList;
     std::list< XTilePoint* >::iterator it;
-    XTilePoint *tmpPoint, *findPoint;
+    XTilePoint *tmpPoint, *findOpenPoint, *findClosePoint;
 
     openList.push_back(start_point);
     while(openList.size() != 0) {
       tmpPoint = getBestPoint(openList);
       openList.remove(tmpPoint);
-      path.push_back(tmpPoint);
       if (tmpPoint->x == end_point->x &&
 	  tmpPoint->y == end_point->y) {
 	std::cout << " find it . " << path.size() <<  std::endl;
@@ -141,21 +142,25 @@ namespace modou
       getChildrenList(map, tmpPoint, childrenList);
       for(it = childrenList.begin(); it != childrenList.end(); it++) {
 	(*it)->calcF(end_point);
-	findPoint = pointInList(*it, openList);
-	if (findPoint != NULL) {
-	  if ((*it)->F < findPoint->F) {
-	    findPoint->F = (*it)->F;
-	    findPoint->mparent = tmpPoint;
+	findOpenPoint = pointInList(*it, openList);
+	findClosePoint = pointInList(*it, path);
+
+	if (findOpenPoint == NULL && findClosePoint == NULL) {
+	  openList.push_back(*it);
+	} else if (findOpenPoint != NULL) {
+	  if ((*it)->F < findOpenPoint->F) {
+	    findOpenPoint->F = (*it)->F;
+	    findOpenPoint->mparent = tmpPoint;
 	  }
-	} else {
-	  findPoint = pointInList(*it, path);
-	  if (findPoint != NULL) {
-	    continue;
-	  } else {
-	    openList.push_back(*it);
+	} else if (findClosePoint != NULL) {
+	  //continue;
+	  if ((*it)->F < findClosePoint->F) {
+	    findClosePoint->F = (*it)->F;
+	    findClosePoint->mparent = tmpPoint;
 	  }
 	}
       }// end for
+      path.push_back(tmpPoint);
     }// end while
   }
 }

@@ -61,11 +61,11 @@ namespace modou
 	if (!path.empty()) {
 	  std::list< XTilePoint* >::reverse_iterator rit;
 	  XTilePoint *tmpPoint = NULL;
-	  int oldx=-1, oldy=-1;
+	  
 	  for(rit = path.rbegin(); rit != path.rend(); rit++) {
 	    if (tmpPoint == NULL) {
 	      tmpPoint = *rit;
-	      //graphics->drawPoint((*rit)->x * 32 - mPixelViewX, (*rit)->y * 32 - mPixelViewY);
+	      graphics->drawPoint((*rit)->x * 32 - mPixelViewX, (*rit)->y * 32 - mPixelViewY);
 	      continue;
 	    } else {
 	      if (tmpPoint->mparent == *rit) {
@@ -74,18 +74,9 @@ namespace modou
 				   (*rit)->x * 32 - mPixelViewX,
 				   (*rit)->y * 32 - mPixelViewY);
 		tmpPoint = *rit;
-		//graphics->drawPoint((*rit)->x * 32 - mPixelViewX, (*rit)->y * 32 - mPixelViewY);
 	      }
+	      graphics->drawPoint((*rit)->x * 32 - mPixelViewX, (*rit)->y * 32 - mPixelViewY);
 	    }
-
-	    // if (oldx == -1) {
-	    //   oldx = (*it)->x;
-	    //   oldy = (*it)->y;
-	    //   continue;
-	    // }
-	    // //graphics->drawLine(oldx * 32 - mPixelViewX, oldy * 32 - mPixelViewY, (*it)->x * 32 - mPixelViewX, (*it)->y * 32 - mPixelViewY);
-	    // oldx = (*it)->x;
-	    // oldy = (*it)->y;
 	  }
 	}
     }
@@ -118,25 +109,25 @@ namespace modou
 	    std::cout << "init path size: " << path.size() << endl;
 	    modou::FindPath::getPath(globals::map, int(pos.x), int(pos.y), px, py, path);
 	    std::cout << "path size: " << path.size() << endl;
-            if (px > pos.x) {
-                pos.x += mapTileSize;
-                if (pos.x > globals::map->GetWidth() * mapTileSize)
-                    pos.x = globals::map->GetWidth() * mapTileSize;
-            } else {
-                pos.x -= mapTileSize;
-                if (pos.x < 0)
-                    pos.x = 0;
-            }
-	    if (py > pos.y) {
-                pos.y += mapTileSize;
-                if (pos.y > globals::map->GetHeight() * mapTileSize)
-                    pos.y = globals::map->GetHeight() * mapTileSize;
-            } else {
-                pos.y -= mapTileSize;
-                if (pos.y < 0)
-                    pos.y = 0;
-            }
-            globals::localPlayer->setPosition(pos);
+            // if (px > pos.x) {
+            //     pos.x += mapTileSize;
+            //     if (pos.x > globals::map->GetWidth() * mapTileSize)
+            //         pos.x = globals::map->GetWidth() * mapTileSize;
+            // } else {
+            //     pos.x -= mapTileSize;
+            //     if (pos.x < 0)
+            //         pos.x = 0;
+            // }
+	    // if (py > pos.y) {
+            //     pos.y += mapTileSize;
+            //     if (pos.y > globals::map->GetHeight() * mapTileSize)
+            //         pos.y = globals::map->GetHeight() * mapTileSize;
+            // } else {
+            //     pos.y -= mapTileSize;
+            //     if (pos.y < 0)
+            //         pos.y = 0;
+            // }
+            // globals::localPlayer->setPosition(pos);
             //globals::localPlayer->navigateTo(pos.x, pos.y);
         } else {
             std::cout << "local Player is no init " << std::endl;
