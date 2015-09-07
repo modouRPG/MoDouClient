@@ -10,8 +10,6 @@ namespace modou
     XTilePoint(int x0, int y0, XTilePoint *mparent0);
     virtual ~XTilePoint();
 
-    bool operator==(XTilePoint *point);
-
     void calcF(XTilePoint *endPoint);
 
     int F, G, H;

@@ -75,12 +75,12 @@ namespace modou
   }
 
   XTilePoint* pointInList(XTilePoint *point,
-		   std::list< XTilePoint* > &openList)
+		   std::list< XTilePoint* > &tList)
   {
     std::list< XTilePoint* >::iterator it;
 
-    for(it = openList.begin(); it != openList.end(); it++) {
-      if ((*it) == point) {
+    for(it = tList.begin(); it != tList.end(); it++) {
+      if ((*it)->x == point->x && (*it)->y == point->y) {
 	return (*it);
       }
     }
@@ -93,8 +93,6 @@ namespace modou
     XTilePoint *best = NULL;
     std::list< XTilePoint* >::iterator it;
     int small = -1;
-
-    std::cout << openList.size() << std::endl;
 
     for( it = openList.begin(); it != openList.end(); it++) {
       if (small == -1 || (*it)->F < small) {
@@ -129,13 +127,16 @@ namespace modou
     std::list< XTilePoint* >::iterator it;
     XTilePoint *tmpPoint, *findOpenPoint, *findClosePoint;
 
+
     openList.push_back(start_point);
+
     while(openList.size() != 0) {
       tmpPoint = getBestPoint(openList);
       openList.remove(tmpPoint);
+      path.push_back(tmpPoint);
       if (tmpPoint->x == end_point->x &&
 	  tmpPoint->y == end_point->y) {
-	std::cout << " find it . " << path.size() <<  std::endl;
+	std::cout << "find it open lise size: " << openList.size() <<  ", closed list size: " << path.size() <<  std::endl;
 	break;
       }
       childrenList.clear();
@@ -148,8 +149,9 @@ namespace modou
 	if (findOpenPoint == NULL && findClosePoint == NULL) {
 	  openList.push_back(*it);
 	} else if (findOpenPoint != NULL) {
-	  if ((*it)->F < findOpenPoint->F) {
-	    findOpenPoint->F = (*it)->F;
+	  if ((*it)->G < findOpenPoint->G) {
+	    findOpenPoint->G = (*it)->G;
+	    findOpenPoint->calcF(end_point);
 	    findOpenPoint->mparent = tmpPoint;
 	  }
 	} else if (findClosePoint != NULL) {
@@ -160,7 +162,7 @@ namespace modou
 	  // }
 	}
       }// end for
-      path.push_back(tmpPoint);
+
     }// end while
   }
 }

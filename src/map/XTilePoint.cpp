@@ -34,13 +34,4 @@ namespace modou
     F = G + H;
   }
 
-  bool XTilePoint::operator==(XTilePoint *point)
-  {
-    if (this->x == point->x &&
-	this->x == point->y) {
-      return true;
-    } else {
-      return false;
-    }
-  }
 }
