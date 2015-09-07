@@ -153,11 +153,11 @@ namespace modou
 	    findOpenPoint->mparent = tmpPoint;
 	  }
 	} else if (findClosePoint != NULL) {
-	  //continue;
-	  if ((*it)->F < findClosePoint->F) {
-	    findClosePoint->F = (*it)->F;
-	    findClosePoint->mparent = tmpPoint;
-	  }
+	  continue;
+	  // if ((*it)->F < findClosePoint->F) {
+	  //   findClosePoint->F = (*it)->F;
+	  //   findClosePoint->mparent = tmpPoint;
+	  // }
 	}
       }// end for
       path.push_back(tmpPoint);
