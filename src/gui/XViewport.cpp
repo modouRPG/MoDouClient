@@ -59,18 +59,33 @@ namespace modou
         graphics->drawText(ss.str(), 0, 0);
 
 	if (!path.empty()) {
-	  std::list< XTilePoint* >::iterator it;
+	  std::list< XTilePoint* >::reverse_iterator rit;
+	  XTilePoint *tmpPoint = NULL;
 	  int oldx=-1, oldy=-1;
-	  for(it = path.begin(); it != path.end(); it++) {
-	    graphics->drawPoint((*it)->x * 32 - mPixelViewX, (*it)->y * 32 - mPixelViewY);
-	    if (oldx == -1) {
-	      oldx = (*it)->x;
-	      oldy = (*it)->y;
+	  for(rit = path.rbegin(); rit != path.rend(); rit++) {
+	    if (tmpPoint == NULL) {
+	      tmpPoint = *rit;
+	      //graphics->drawPoint((*rit)->x * 32 - mPixelViewX, (*rit)->y * 32 - mPixelViewY);
 	      continue;
+	    } else {
+	      if (tmpPoint->mparent == *rit) {
+		graphics->drawLine(tmpPoint->x * 32 - mPixelViewX,
+				   tmpPoint->y * 32 - mPixelViewY,
+				   (*rit)->x * 32 - mPixelViewX,
+				   (*rit)->y * 32 - mPixelViewY);
+		tmpPoint = *rit;
+		//graphics->drawPoint((*rit)->x * 32 - mPixelViewX, (*rit)->y * 32 - mPixelViewY);
+	      }
 	    }
-	    //graphics->drawLine(oldx * 32 - mPixelViewX, oldy * 32 - mPixelViewY, (*it)->x * 32 - mPixelViewX, (*it)->y * 32 - mPixelViewY);
-	    oldx = (*it)->x;
-	    oldy = (*it)->y;
+
+	    // if (oldx == -1) {
+	    //   oldx = (*it)->x;
+	    //   oldy = (*it)->y;
+	    //   continue;
+	    // }
+	    // //graphics->drawLine(oldx * 32 - mPixelViewX, oldy * 32 - mPixelViewY, (*it)->x * 32 - mPixelViewX, (*it)->y * 32 - mPixelViewY);
+	    // oldx = (*it)->x;
+	    // oldy = (*it)->y;
 	  }
 	}
     }

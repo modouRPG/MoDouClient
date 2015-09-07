@@ -75,7 +75,8 @@ namespace modou
   }
 
   XTilePoint* pointInList(XTilePoint *point,
-		   std::list< XTilePoint* > &openList) {
+		   std::list< XTilePoint* > &openList)
+  {
     std::list< XTilePoint* >::iterator it;
 
     for(it = openList.begin(); it != openList.end(); it++) {
@@ -87,7 +88,8 @@ namespace modou
   }
 
   
-  XTilePoint* getBestPoint(std::list< XTilePoint* > &openList) {
+  XTilePoint* getBestPoint(std::list< XTilePoint* > &openList)
+  {
     XTilePoint *best = NULL;
     std::list< XTilePoint* >::iterator it;
     int small = -1;
