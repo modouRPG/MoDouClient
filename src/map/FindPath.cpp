@@ -154,7 +154,9 @@ namespace modou
 	    findOpenPoint->calcF(end_point);
 	    findOpenPoint->mparent = tmpPoint;
 	  }
+	  delete(*it);
 	} else if (findClosePoint != NULL) {
+	  delete(*it);
 	  continue;
 	  // if ((*it)->F < findClosePoint->F) {
 	  //   findClosePoint->F = (*it)->F;
@@ -162,7 +164,13 @@ namespace modou
 	  // }
 	}
       }// end for
-
     }// end while
+    // start point and some of children point has been added to open list or path list. So we delete end point and some
+    // of children point.
+    delete(end_point);
+    for(it = openList.begin(); it != openList.end(); it++) {
+      delete(*it);
+    }
+    openList.clear();
   }
 }

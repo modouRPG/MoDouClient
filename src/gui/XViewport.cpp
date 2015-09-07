@@ -17,8 +17,13 @@ namespace modou
 
     XViewport::~XViewport()
     {
-        if (mMap)
-            delete(mMap);
+      std::list< XTilePoint* >::iterator it;
+      if (mMap)
+	delete(mMap);
+      for(it = path.begin(); it != path.end(); it++) {
+	delete(*it);
+      }
+      path.clear();
     }
 
     void XViewport::setMap(TmxMap *map)
@@ -60,6 +65,7 @@ namespace modou
 
 	if (!path.empty()) {
 	  std::list< XTilePoint* >::reverse_iterator rit;
+	  
 	  XTilePoint *tmpPoint = NULL;
 	  
 	  for(rit = path.rbegin(); rit != path.rend(); rit++) {
@@ -78,6 +84,7 @@ namespace modou
 	      graphics->drawPoint((*rit)->x * 32 - mPixelViewX, (*rit)->y * 32 - mPixelViewY);
 	    }
 	  }
+
 	}
     }
 
@@ -105,6 +112,11 @@ namespace modou
             int px, py;
             SDL_GetMouseState(&px, &py);
             XVector pos = globals::localPlayer->getPosition();
+	    
+	    std::list< XTilePoint* >::iterator it;
+	    for(it = path.begin(); it != path.end(); it++) {
+	      delete(*it);
+	    }
 	    path.clear();
 	    std::cout << "init path size: " << path.size() << endl;
 	    modou::FindPath::getPath(globals::map, int(pos.x), int(pos.y), px, py, path);
