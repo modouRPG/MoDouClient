@@ -24,7 +24,7 @@ namespace modou
             int mPixelViewX, mPixelViewY;
             bool leftMouseAction();
             void followMouse();
-	    std::list< XTilePoint* > path;
+	    //std::list< XTilePoint* > path;
     };
 }
 

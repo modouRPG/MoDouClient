@@ -12,6 +12,7 @@ MoDouClient
 编译
 =======
     cd src
+    autoscan
     aclocal
     autoheader
     autoconf

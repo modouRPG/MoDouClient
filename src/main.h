@@ -7,6 +7,7 @@
 #include "net/LoginConn.h"
 #include "being/XLocalPlayer.h"
 #include "map/TmxMap.h"
+#include "Game.h"
 
 namespace globals
 {
@@ -14,10 +15,13 @@ namespace globals
     extern modou::TmxMap *map;
     extern modou::XLocalPlayer *localPlayer;
     extern modou::LoginConn *loginConn;
+    extern modou::Game *gGame;
 }
 
 static const int mapTileSize = 32;
 static const int screenWidth = 800;
 static const int screenHeight = 600;
+
+
 
 #endif

@@ -61,7 +61,8 @@ namespace modou
 	    //WorldSelectDlg *wsDlg = new WorldSelectDlg();
 	    //top->remove(this);
 	    //top->add(wsDlg, (top->getWidth() - this->getWidth()) / 2, (top->getHeight() - this->getHeight())/2);
-	    mGame = new Game();
+	    //mGame = new Game();
+	    globals::gGame = new Game();
         } else if (eventId == "register") {
 
         }

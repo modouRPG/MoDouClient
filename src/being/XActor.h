@@ -1,12 +1,32 @@
 #ifndef _XACTOR_H_
 #define _XACTOR_H_
 #include <guichan.hpp>
+#include <list>
 #include "map/TmxMap.h"
+#include "map/XTilePoint.h"
 #include "XVector.h"
 //#include "being/XActor.h"
 
 namespace modou
 {
+  enum actor_direction {
+    LEFT,
+    UP,
+    RIGHT,
+    DOWN
+  };
+
+  enum actor_action {
+    STAND = 0,
+    MOVE,
+    ATTACK,
+    SIT,
+    DEAD,
+    HURT,
+    SPAWN,
+    PRESTAND
+  };
+  
     class XActor
     {
         public:
@@ -34,6 +54,8 @@ namespace modou
 
             int mWidth;
             int mHeight;
+
+	    std::list< XTilePoint* > mPath;
 
             std::string name;
         protected:

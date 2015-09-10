@@ -9,8 +9,9 @@
 
 namespace sdl
 {
-    bool running = true;
-    SDL_Surface* screen;
+  bool running = true;
+  SDL_Surface* screen;
+  
 
     // All back ends contain objects to make Guichan work on a
     // specific target - in this case SDL - and they are a Graphics
@@ -115,6 +116,11 @@ namespace sdl
             globals::gui->draw();
             // Finally we update the screen.
             SDL_Flip(screen);
-        }
+
+	    if (globals::gGame) {
+	      globals::gGame->loop();
+	    }
+	}
     }
+
 }

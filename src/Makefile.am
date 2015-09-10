@@ -48,5 +48,6 @@ modou_SOURCES=main.cpp \
 	map/FindPath.cpp \
 	map/FindPath.h \
 	map/XTilePoint.h \
-	map/XTilePoint.cpp 
+	map/XTilePoint.cpp  \
+	menum.h
 

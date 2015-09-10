@@ -6,17 +6,19 @@
 
 namespace modou
 {
-    class XLocalPlayer : public XActor
-    {
-        public:
-            XLocalPlayer();
+  class XLocalPlayer : public XActor
+  {
+  public:
+    XLocalPlayer();
+    
+    virtual ~XLocalPlayer();
+    
+    void draw(gcn::Graphics *const graphics, const int offsetX, const int offsetY) const;
+    
+    bool setTarget(const int x, const int y);
 
-            virtual ~XLocalPlayer();
-
-            void draw(gcn::Graphics *const graphics, const int offsetX, const int offsetY) const;
-
-            bool navigateTo(const int x, const int y);
-    };
+    void logic();
+  };
 }
 
 #endif

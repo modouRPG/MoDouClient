@@ -1,9 +1,7 @@
 #include <SDL.h>
 #include <iostream>
 #include <guichan.hpp>
-
 #include "main.h"
-
 #include "sdlhelp.hpp"
 #include "helloworld.hpp"
 
@@ -11,6 +9,7 @@ gcn::Gui *(globals::gui) = new gcn::Gui();
 modou::TmxMap *(globals::map) = NULL;
 modou::XLocalPlayer *(globals::localPlayer) = NULL;
 modou::LoginConn *(globals::loginConn) = new modou::LoginConn("127.0.0.1", 2048);
+modou::Game *(globals::gGame) = NULL;
 
 int main(int argc, char *argv[])
 {

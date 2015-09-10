@@ -20,10 +20,6 @@ namespace modou
       std::list< XTilePoint* >::iterator it;
       if (mMap)
 	delete(mMap);
-      for(it = path.begin(); it != path.end(); it++) {
-	delete(*it);
-      }
-      path.clear();
     }
 
     void XViewport::setMap(TmxMap *map)
@@ -58,34 +54,10 @@ namespace modou
             mPixelViewY = viewMaxY;
 
         mMap->draw(graphics, mPixelViewX, mPixelViewY, getWidth(), getHeight());
-	//        gcn::SDLGraphics *g = static_cast<gcn::SDLGraphics *>(graphics);
         std::stringstream ss;
         ss << "X:" << mPixelViewX << ", Y:" << mPixelViewY;
         graphics->drawText(ss.str(), 0, 0);
 
-	if (!path.empty()) {
-	  std::list< XTilePoint* >::reverse_iterator rit;
-	  
-	  XTilePoint *tmpPoint = NULL;
-	  
-	  for(rit = path.rbegin(); rit != path.rend(); rit++) {
-	    if (tmpPoint == NULL) {
-	      tmpPoint = *rit;
-	      graphics->drawPoint((*rit)->x * 32 - mPixelViewX, (*rit)->y * 32 - mPixelViewY);
-	      continue;
-	    } else {
-	      if (tmpPoint->mparent == *rit) {
-		graphics->drawLine(tmpPoint->x * 32 - mPixelViewX,
-				   tmpPoint->y * 32 - mPixelViewY,
-				   (*rit)->x * 32 - mPixelViewX,
-				   (*rit)->y * 32 - mPixelViewY);
-		tmpPoint = *rit;
-	      }
-	      graphics->drawPoint((*rit)->x * 32 - mPixelViewX, (*rit)->y * 32 - mPixelViewY);
-	    }
-	  }
-
-	}
     }
 
     void XViewport::mousePressed(gcn::MouseEvent &event)
@@ -111,36 +83,9 @@ namespace modou
         if (globals::localPlayer) {
             int px, py;
             SDL_GetMouseState(&px, &py);
-            XVector pos = globals::localPlayer->getPosition();
-	    
-	    std::list< XTilePoint* >::iterator it;
-	    for(it = path.begin(); it != path.end(); it++) {
-	      delete(*it);
-	    }
-	    path.clear();
-	    std::cout << "init path size: " << path.size() << endl;
-	    modou::FindPath::getPath(globals::map, int(pos.x), int(pos.y), px, py, path);
-	    std::cout << "path size: " << path.size() << endl;
-            // if (px > pos.x) {
-            //     pos.x += mapTileSize;
-            //     if (pos.x > globals::map->GetWidth() * mapTileSize)
-            //         pos.x = globals::map->GetWidth() * mapTileSize;
-            // } else {
-            //     pos.x -= mapTileSize;
-            //     if (pos.x < 0)
-            //         pos.x = 0;
-            // }
-	    // if (py > pos.y) {
-            //     pos.y += mapTileSize;
-            //     if (pos.y > globals::map->GetHeight() * mapTileSize)
-            //         pos.y = globals::map->GetHeight() * mapTileSize;
-            // } else {
-            //     pos.y -= mapTileSize;
-            //     if (pos.y < 0)
-            //         pos.y = 0;
-            // }
-            // globals::localPlayer->setPosition(pos);
-            //globals::localPlayer->navigateTo(pos.x, pos.y);
+
+	    globals::localPlayer->setTarget(mPixelViewX + px, mPixelViewY + py);
+            
         } else {
             std::cout << "local Player is no init " << std::endl;
         }

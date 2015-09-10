@@ -13,8 +13,8 @@ namespace modou
 {
     gcn::Container* top;
     modou::XFont *font;
-    LoginDlg *loginDlg;
-    XDesktop *desktop;
+  modou::LoginDlg *gLoginDlg;
+  modou::XDesktop *gDesktop;
 
     /**
      * Initialises the Hello World example by populating the global Gui
@@ -44,12 +44,11 @@ namespace modou
         //globals::map = new XMap(32, 24, 32, 32);
         //globals::map = XMapReader::readMap("./m1.conf");
         //globals::map->name = "平安镇";
-
-        desktop = new XDesktop();
-        top->add(desktop);
-
-        loginDlg = new LoginDlg();
-        top->add(loginDlg, (top->getWidth() - loginDlg->getWidth()) / 2, (top->getHeight() - loginDlg->getHeight())/2);
+	gDesktop = new modou::XDesktop();
+	top->add(gDesktop);
+	
+	gLoginDlg = new modou::LoginDlg();
+	top->add(gLoginDlg, (top->getWidth() - gLoginDlg->getWidth()) / 2, (top->getHeight() - gLoginDlg->getHeight())/2);
     }
     
     /**
@@ -57,8 +56,6 @@ namespace modou
      */
     void halt()
     {
-        delete loginDlg;
-        delete desktop;
         delete font;
         delete top;
     }

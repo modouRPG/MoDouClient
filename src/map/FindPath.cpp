@@ -123,6 +123,12 @@ namespace modou
     end_point->x = (ex + mapTileSize - 1) / mapTileSize;
     end_point->y = (ey + mapTileSize - 1) / mapTileSize;
 
+    if (map->isBlock(end_point->x, end_point->y)) {
+      delete(start_point);
+      delete(end_point);
+      return;
+    }
+
     std::list< XTilePoint* > openList, childrenList;
     std::list< XTilePoint* >::iterator it;
     XTilePoint *tmpPoint, *findOpenPoint, *findClosePoint;
