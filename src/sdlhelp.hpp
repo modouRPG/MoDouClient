@@ -119,6 +119,7 @@ namespace sdl
 
 	    if (globals::gGame) {
 	      globals::gGame->loop();
+	      globals::tick++;
 	    }
 	}
     }

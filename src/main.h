@@ -8,6 +8,7 @@
 #include "being/XLocalPlayer.h"
 #include "map/TmxMap.h"
 #include "Game.h"
+#include <stdint.h>
 
 namespace globals
 {
@@ -16,6 +17,7 @@ namespace globals
     extern modou::XLocalPlayer *localPlayer;
     extern modou::LoginConn *loginConn;
     extern modou::Game *gGame;
+    extern uint64_t tick;
 }
 
 static const int mapTileSize = 32;

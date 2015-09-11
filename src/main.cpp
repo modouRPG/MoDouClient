@@ -10,6 +10,7 @@ modou::TmxMap *(globals::map) = NULL;
 modou::XLocalPlayer *(globals::localPlayer) = NULL;
 modou::LoginConn *(globals::loginConn) = new modou::LoginConn("127.0.0.1", 2048);
 modou::Game *(globals::gGame) = NULL;
+uint64_t globals::tick=0;
 
 int main(int argc, char *argv[])
 {

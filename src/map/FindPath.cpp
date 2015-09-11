@@ -25,7 +25,7 @@ namespace modou
       for(j = tmpPoint->y - 1; j <= tmpPoint->y + 1; j++) {
 	for(i = tmpPoint->x; i<= tmpPoint->x + 1; i++) {
 	  if (!map->isBlock(i, j) && map->inMap(i, j) &&
-	      ! (i == tmpPoint->x && j == tmpPoint->y)) {
+	      !(i == tmpPoint->x && j == tmpPoint->y)) {
 	    cPoint = new XTilePoint(i, j, tmpPoint);
 	    childrenList.push_back(cPoint);
 	  }
@@ -35,7 +35,7 @@ namespace modou
       for(j = tmpPoint->y - 1; j <= tmpPoint->y + 1; j++) {
 	for(i = tmpPoint->x - 1; i<= tmpPoint->x; i++) {
 	  if (!map->isBlock(i, j) && map->inMap(i, j) &&
-	      ! (i == tmpPoint->x && j == tmpPoint->y)) {
+	      !(i == tmpPoint->x && j == tmpPoint->y)) {
 	    cPoint = new XTilePoint(i, j, tmpPoint);
 	    childrenList.push_back(cPoint);
 	  }
@@ -45,7 +45,7 @@ namespace modou
       for(j = tmpPoint->y; j <= tmpPoint->y + 1; j++) {
 	for(i = tmpPoint->x - 1; i<= tmpPoint->x + 1; i++) {
 	  if (!map->isBlock(i, j) && map->inMap(i, j) &&
-	      ! (i == tmpPoint->x && j == tmpPoint->y)) {
+	      !(i == tmpPoint->x && j == tmpPoint->y)) {
 	    cPoint = new XTilePoint(i, j, tmpPoint);
 	    childrenList.push_back(cPoint);
 	  }
@@ -55,7 +55,7 @@ namespace modou
       for(j = tmpPoint->y - 1; j <= tmpPoint->y; j++) {
 	for(i = tmpPoint->x - 1; i<= tmpPoint->x + 1; i++) {
 	  if (!map->isBlock(i, j) && map->inMap(i, j) &&
-	      ! (i == tmpPoint->x && j == tmpPoint->y)) {
+	      !(i == tmpPoint->x && j == tmpPoint->y)) {
 	    cPoint = new XTilePoint(i, j, tmpPoint);
 	    childrenList.push_back(cPoint);
 	  }
@@ -65,7 +65,7 @@ namespace modou
       for(j = tmpPoint->y - 1; j <= tmpPoint->y + 1; j++) {
 	for(i = tmpPoint->x - 1; i<= tmpPoint->x + 1; i++) {
 	  if (!map->isBlock(i, j) && map->inMap(i, j) &&
-	      ! (i == tmpPoint->x && j == tmpPoint->y)) {
+	      !(i == tmpPoint->x && j == tmpPoint->y)) {
 	    cPoint = new XTilePoint(i, j, tmpPoint);
 	    childrenList.push_back(cPoint);
 	  }

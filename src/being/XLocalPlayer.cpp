@@ -82,6 +82,9 @@ namespace modou
     if (mPath.empty()) {
       return;
     }
+    if (globals::tick % 10 != 0) {
+      return;
+    }
     XTilePoint *point = mPath.front();
     mPos.x = point->x * 32;
     mPos.y = point->y * 32;
