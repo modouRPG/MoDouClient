@@ -8,6 +8,7 @@ namespace modou
   TmxMap::TmxMap() : Tmx::Map()
   {
     m_pActor = NULL;
+    first = true;
   }
 
   TmxMap::~TmxMap()
@@ -112,19 +113,21 @@ namespace modou
     for(i=0; i< this->GetNumTileLayers(); i++) {
       const Tmx::TileLayer *tileLayer = this->GetTileLayer(i);
       if (tileLayer->GetName() == "block") {
-	continue;
+    	continue;
       }
-      for(y=0; y<tileLayer->GetHeight(); y++) {
-    	for(x =0; x< tileLayer->GetWidth(); x++) {
-	  if (tileLayer->GetTileTilesetIndex(x, y) == -1) {
-	    //	    printf("..........      ");
-	  } else {
-	    //printf("%03d(%03d)", tileLayer->GetTileId(x, y), tileLayer->GetTileGid(x, y));
-	    //	    ind = tileLayer->GetTileGid(x, y) + tileLayer->GetTileId(x, y) - 1;
-	    ind = tileLayer->GetTileGid(x, y) - 1;
-	    gcn_image = all_tiles_image.at(ind);
-	    graphics->drawImage(gcn_image, x * 32 - scrollX, y * 32 - scrollY);
-	  }
+      y = scrollY/32 - 1 < 0 ? 0 : scrollY/32 -1;
+      x = scrollX/32 - 1 < 0 ? 0 : scrollX/32 - 1;
+      // for(; y<scrollY/32 + 1 + height/32 + 1; y++) {
+      // 	for(; x< scrollX/32 + 1 + width/32 + 1; x++) {
+      for(y = 0; y < tileLayer->GetHeight(); y++) {
+      	for(x = 0; x < tileLayer->GetWidth(); x++) {
+    	  if (tileLayer->GetTileTilesetIndex(x, y) == -1) {
+    	    //	    printf("..........      ");
+    	  } else {
+    	    ind = tileLayer->GetTileGid(x, y) - 1;
+    	    gcn_image = all_tiles_image.at(ind);
+    	    graphics->drawImage(gcn_image, x * 32 - scrollX, y * 32 - scrollY);
+    	  }
     	}
       }
     }
@@ -137,10 +140,12 @@ namespace modou
 	Tmx::Tile *tile = all_tiles.at(object->GetGid());
 	const Tmx::Image *image = tile->GetImage();
 
-	graphics->drawImage(gcn::Image::load(image->GetSource(), true), object->GetX() - scrollX, object->GetY() - scrollY);
-    	// printf("X: %d, Y: %d, Gid: %d.\n", object->GetX(),
-    	//        object->GetY(),
-    	//        object->GetGid());
+	if (object->GetX() - scrollX >= 0 &&
+	    object->GetX() - scrollX <= width &&
+	    object->GetY() - scrollY >= 0 &&
+	    object->GetY() - scrollY <= height) {
+	  graphics->drawImage(gcn::Image::load(image->GetSource(), true), object->GetX() - scrollX, object->GetY() - scrollY);
+	}
       }
     }
 

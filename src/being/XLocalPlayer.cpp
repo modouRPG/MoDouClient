@@ -9,8 +9,15 @@ namespace modou
     XLocalPlayer::XLocalPlayer() :
         XActor()
     {
-        mWidth = 60;
-        mHeight = 60;
+        // mWidth = 48;
+        // mHeight = 64;
+	mWidth = 40;
+	mHeight = 80;
+	pic_path = "./data/being/actor3.png";
+	//pic_path = "./data/img/aa2186.png";
+	mdirection = adirection::DOWN;
+	image = gcn::Image::load(pic_path, true);
+	maction = aaction::STAND;
     }
 
     XLocalPlayer::~XLocalPlayer()
@@ -22,9 +29,47 @@ namespace modou
       mPath.clear();
     }
 
-    void XLocalPlayer::draw(gcn::Graphics *const graphics, const int offsetX, const int offsetY) const
+  void XLocalPlayer::getPicPos(int &x, int &y) const
+  {
+    if (maction == aaction::STAND) {
+      x = 0;
+    } else {
+      switch(globals::tick % 8) {
+      case 0:
+	x = 0;
+	break;
+      case 2:
+	x = mWidth;
+	break;
+      case 4:
+	x = 2 * mWidth;
+	break;
+      case 6:
+	x = 3 * mWidth;
+	break;
+      }
+    }
+    switch(mdirection) {
+    case adirection::LEFT:
+      y = mHeight;
+      break;
+    case adirection::UP:
+      y = 3 * mHeight;
+      break;
+    case adirection::RIGHT:
+      y = 2 * mHeight;
+      break;
+    case adirection::DOWN:
+      y = 0;
+      break;
+    }
+  }
+
+    void XLocalPlayer::draw(gcn::Graphics *const graphics,
+			    const int offsetX,
+			    const int offsetY) const
     {
-        gcn::SDLGraphics *g = static_cast<gcn::SDLGraphics *>(graphics);
+      //gcn::SDLGraphics *g = static_cast<gcn::SDLGraphics *>(graphics);
 
         int px = getPixelX() + offsetX - getWidth();
         int py = getPixelY() + offsetY - getHeight();
@@ -34,10 +79,13 @@ namespace modou
         if (py <= 0)
             py = 0;
 
-        g->drawImage(gcn::Image::load("./data/img/aa2186.png", true), px, py);
+        //graphics->drawImage(gcn::Image::load("./data/img/aa2186.png", true), px, py);
+	int sx = 0, sy = 0;
+	getPicPos(sx, sy);
+	graphics->drawImage(image, sx, sy, px, py, mWidth, mHeight);
 	std::stringstream ss;
 	ss << "Player X: " << px << ", Y: " << py;
-	g->drawText(ss.str(), 0, 20);
+	graphics->drawText(ss.str(), 0, 20);
         //g->setColor(gcn::Color(255, 0, 0, 255));
         //g->fillRectangle(gcn::Rectangle(getPixelX(), getPixelY(), 10, 10));
     }
@@ -80,14 +128,28 @@ namespace modou
   void XLocalPlayer::logic()
   {
     if (mPath.empty()) {
+      maction = aaction::STAND;
       return;
     }
     if (globals::tick % 10 != 0) {
       return;
     }
+    maction = aaction::MOVE;
     XTilePoint *point = mPath.front();
-    mPos.x = point->x * 32;
-    mPos.y = point->y * 32;
+    int dx, dy;
+    dx = point->x * 32;
+    dy = point->y * 32;
+    if (dx > mPos.x) {
+      mdirection = adirection::RIGHT;
+    } else if (dx < mPos.x) {
+      mdirection = adirection::LEFT;
+    } else if (dy > mPos.y) {
+      mdirection = adirection::DOWN;
+    } else {
+      mdirection = adirection::UP;
+    }
+    mPos.x = dx;
+    mPos.y = dy;
     mPath.pop_front();
     delete(point);
   }

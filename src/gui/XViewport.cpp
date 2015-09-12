@@ -57,7 +57,6 @@ namespace modou
         std::stringstream ss;
         ss << "X:" << mPixelViewX << ", Y:" << mPixelViewY;
         graphics->drawText(ss.str(), 0, 0);
-
     }
 
     void XViewport::mousePressed(gcn::MouseEvent &event)

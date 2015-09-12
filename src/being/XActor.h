@@ -9,24 +9,6 @@
 
 namespace modou
 {
-  enum actor_direction {
-    LEFT,
-    UP,
-    RIGHT,
-    DOWN
-  };
-
-  enum actor_action {
-    STAND = 0,
-    MOVE,
-    ATTACK,
-    SIT,
-    DEAD,
-    HURT,
-    SPAWN,
-    PRESTAND
-  };
-  
     class XActor
     {
         public:

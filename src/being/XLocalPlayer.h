@@ -3,6 +3,7 @@
 #include "XVector.h"
 #include "map/XMap.h"
 #include "being/XActor.h"
+#include "menum.h"
 
 namespace modou
 {
@@ -18,6 +19,12 @@ namespace modou
     bool setTarget(const int x, const int y);
 
     void logic();
+  private:
+    void getPicPos(int &x, int &y) const;
+    std::string pic_path;
+    adirection::actor_direction mdirection;
+    aaction::actor_action maction;
+    gcn::Image *image;
   };
 }
 

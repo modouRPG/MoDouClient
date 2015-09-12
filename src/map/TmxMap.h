@@ -33,6 +33,7 @@ namespace modou
     std::vector< gcn::Image* > all_tiles_image;
     std::vector< int > map_block_flag;
     XActor *m_pActor;
+    bool first;
   };
 }
 
