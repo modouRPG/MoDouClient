@@ -16,6 +16,8 @@ namespace modou
             virtual ~XActor();
 
             void setMap(TmxMap *map);
+	    void addToMap(TmxMap *map);
+	    
             int getWidth() const
             { return mWidth; }
             int getHeight() const
@@ -32,7 +34,11 @@ namespace modou
             void setPosition(XVector &pos)
             { mPos = pos; }
 
+	    bool isClickMe(int x, int y);
+	    bool isArroundMe(XActor *actor);
+
             virtual void draw(gcn::Graphics *const graphics, const int offsetX, const int offsetY) const = 0;
+	    virtual void action() const = 0;
 
             int mWidth;
             int mHeight;

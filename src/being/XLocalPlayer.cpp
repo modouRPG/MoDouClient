@@ -34,19 +34,15 @@ namespace modou
     if (maction == aaction::STAND) {
       x = 0;
     } else {
-      switch(globals::tick % 8) {
-      case 0:
+      int range = globals::tick % 16;
+      if (range < 4) {
 	x = 0;
-	break;
-      case 2:
+      } else if (range < 8) {
 	x = mWidth;
-	break;
-      case 4:
+      } else if (range < 12) {
 	x = 2 * mWidth;
-	break;
-      case 6:
+      } else if (range < 16) {
 	x = 3 * mWidth;
-	break;
       }
     }
     switch(mdirection) {
@@ -131,7 +127,7 @@ namespace modou
       maction = aaction::STAND;
       return;
     }
-    if (globals::tick % 10 != 0) {
+    if (globals::tick % 8 != 0) {
       return;
     }
     maction = aaction::MOVE;
@@ -139,18 +135,30 @@ namespace modou
     int dx, dy;
     dx = point->x * 32;
     dy = point->y * 32;
-    if (dx > mPos.x) {
-      mdirection = adirection::RIGHT;
-    } else if (dx < mPos.x) {
-      mdirection = adirection::LEFT;
-    } else if (dy > mPos.y) {
-      mdirection = adirection::DOWN;
-    } else {
-      mdirection = adirection::UP;
-    }
+    
+    directTo(dx, dy);
+    
     mPos.x = dx;
     mPos.y = dy;
     mPath.pop_front();
     delete(point);
+  }
+
+  void XLocalPlayer::directTo(int x, int y)
+  {
+    if (x > mPos.x) {
+      mdirection = adirection::RIGHT;
+    } else if (x < mPos.x) {
+      mdirection = adirection::LEFT;
+    } else if (y > mPos.y) {
+      mdirection = adirection::DOWN;
+    } else {
+      mdirection = adirection::UP;
+    }
+  }
+
+  void XLocalPlayer::action() const
+  {
+    std::cout << "click me " << name << std::endl;
   }
 }

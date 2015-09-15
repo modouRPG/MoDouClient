@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "being/XActor.h"
+#include "being/XSpirit.h"
+#include "main.h"
 
 namespace modou
 {
@@ -37,10 +39,8 @@ namespace modou
       tiles = tileset->GetTiles();
       for(j=0; j < tiles.size(); j++) {
 	tmp_tile = tiles.at(j);
-	//all_tiles.insert(tmp_tile->GetId() + firstGid, tmp_tile);
 	all_tiles.push_back(tmp_tile);
 	all_tiles_image.push_back(gcn::Image::load(tmp_tile->GetImage()->GetSource()));
-	//	std::cout << tmp_tile->GetId() + firstGid << std::endl;
       }
     }
 
@@ -60,16 +60,14 @@ namespace modou
       }
     }
 
-    // for (i=0; i< this->GetNumObjectGroups(); i++) {
-    //   const Tmx::ObjectGroup *objectGroup = this->GetObjectGroup(i);
-    //   for (int j = 0; j < objectGroup->GetNumObjects(); ++j) {
-    // 	// Get an object.
-    // 	const Tmx::Object *object = objectGroup->GetObject(j);
-    // 	// printf("X: %d, Y: %d, Gid: %d.\n", object->GetX(),
-    // 	//        object->GetY(),
-    // 	//        object->GetGid());
-    //   }
-    // }
+    // TODO: load npcs from server;
+    XSpirit *sp = new XSpirit("老奶奶",
+			      "./data/img/aa2186.png",
+			      544,
+			      288,
+			      60,
+			      60);
+    actor_array.push_back(sp);
   }
 
   bool TmxMap::isBlock(int tx, int ty)
@@ -95,6 +93,39 @@ namespace modou
     return true;
   }
 
+  void TmxMap::addActor(XActor *actor)
+  {
+    actor_array.push_back(actor);
+  }
+
+  XActor* TmxMap::clickNpc(int px, int py) {
+    std::vector< XActor* >::iterator it;
+
+    std::cout << "in click npc. " << std::endl;
+    for(it = actor_array.begin(); it != actor_array.end(); it++) {
+      if ((*it)->isArroundMe(m_pActor) &&
+	  (*it)->isClickMe(px, py)) {
+	return (*it);
+      }
+    }
+    std::cout << "no click npc." << std::endl;
+    return NULL;
+  }
+
+  int TmxMap::click(int realx, int realy)
+  {
+    globals::localPlayer->directTo(realx, realy);
+    XActor *a = clickNpc(realx, realy);
+    if (a != NULL) {
+      a->action();
+    } else if (globals::localPlayer) {
+      globals::localPlayer->setTarget(realx, realy);
+    } else {
+      std::cout << "local Player is no init " << std::endl;
+    }
+    return 0;
+  }
+  
   void TmxMap::draw(gcn::Graphics *graphics, int scrollX, int scrollY, int width, int height)
   {
     int i=0, j=0, x=0, y=0;
@@ -148,10 +179,15 @@ namespace modou
 	}
       }
     }
-
+    std::vector< XActor* >::iterator it;
+    for( it = actor_array.begin(); it != actor_array.end(); it++) {
+      (*it)->draw(graphics, -scrollX, -scrollY);
+    }
+    
     if (m_pActor) {
       m_pActor->draw(graphics, -scrollX, -scrollY);
     }
+
     graphics->drawText(map_name, 800/2, 80, gcn::Graphics::CENTER);
   }
 }

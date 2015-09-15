@@ -6,15 +6,24 @@ namespace modou
 {
     class XWindow : public gcn::Window
     {
-        public:
-            XWindow();
-            XWindow(const std::string& caption);
+    public:
+      XWindow();
+      XWindow(const std::string& caption);
+      
+      virtual ~XWindow();
+      
+      void setShowCloseBtn(bool show);
+      
+      virtual void close();
+      
+      void draw(gcn::Graphics *graphics);
 
-            virtual ~XWindow();
-
-            virtual void close();
+      void mousePressed(gcn::MouseEvent &event);
     protected:
-	    void center();
+      void center();
+    private:
+      bool mShowCloseBtn;
+      gcn::Rectangle mCloseRect;
     };
 }
 

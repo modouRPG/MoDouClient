@@ -23,7 +23,10 @@ namespace modou
 
         mRowHeight = mUserField->getHeight() + 4;
         mCellWidth = this->getWidth() / mColNum;
-        
+
+	setBaseColor(gcn::Color(190, 208, 247, 128));
+	setPadding(3);
+	
         place(0, 0, mUserLabel);
         place(0, 1, mUserField);
         place(1, 0, mPassLabel);
@@ -38,6 +41,7 @@ namespace modou
         //this->add(mLoginBtn);
         //this->add(mCancelBtn);
         setVisible(true);
+	setTitleBarHeight(25);
     }
 
     LoginDlg::~LoginDlg()

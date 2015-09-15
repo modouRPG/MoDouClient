@@ -15,8 +15,12 @@ namespace modou
     virtual ~XLocalPlayer();
     
     void draw(gcn::Graphics *const graphics, const int offsetX, const int offsetY) const;
+
+    void action() const;
     
     bool setTarget(const int x, const int y);
+
+    void directTo(int x, int y);
 
     void logic();
   private:

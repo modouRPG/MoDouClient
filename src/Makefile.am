@@ -49,5 +49,13 @@ modou_SOURCES=main.cpp \
 	map/FindPath.h \
 	map/XTilePoint.h \
 	map/XTilePoint.cpp  \
-	menum.h
+	menum.h \
+	gui/NpcDialog.h \
+	gui/NpcDialog.cpp \
+	gui/XTextBox.h \
+	gui/XTextBox.cpp \
+	gui/XListBox.h \
+	gui/XListBox.cpp \
+	gui/XListModel.h \
+	gui/XListModel.cpp
 

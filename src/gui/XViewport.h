@@ -23,7 +23,7 @@ namespace modou
         private:
             int mPixelViewX, mPixelViewY;
             bool leftMouseAction();
-            void followMouse();
+            void followMouse(int px, int py);
 	    //std::list< XTilePoint* > path;
     };
 }

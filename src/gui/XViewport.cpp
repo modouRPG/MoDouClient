@@ -73,20 +73,21 @@ namespace modou
 
     bool XViewport::leftMouseAction()
     {
-        followMouse();
-        return true;
+      int px, py;
+      SDL_GetMouseState(&px, &py);
+      mMap->click(mPixelViewX + px, mPixelViewY + py);
+      //followMouse(px, py);
+
+      return true;
     }
 
-    void XViewport::followMouse()
+  void XViewport::followMouse(int px, int py)
     {
-        if (globals::localPlayer) {
-            int px, py;
-            SDL_GetMouseState(&px, &py);
-
-	    globals::localPlayer->setTarget(mPixelViewX + px, mPixelViewY + py);
-            
-        } else {
-            std::cout << "local Player is no init " << std::endl;
-        }
+      if (globals::localPlayer) {
+	globals::localPlayer->setTarget(mPixelViewX + px, mPixelViewY + py);
+        
+      } else {
+	std::cout << "local Player is no init " << std::endl;
+      }
     }
 }

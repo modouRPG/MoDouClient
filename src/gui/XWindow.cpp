@@ -2,25 +2,64 @@
 
 namespace modou
 {
-    XWindow::XWindow() : gcn::Window()
-    {
-      setBaseColor(gcn::Color(190, 208, 247, 128));
-    }
-    XWindow::XWindow(const std::string& caption) : gcn::Window(caption)
-    {
-      setBaseColor(gcn::Color(190, 208, 247, 128));
-    }
-    XWindow::~XWindow()
-    {
+  XWindow::XWindow() : gcn::Window()
+  {
+    mShowCloseBtn = false;
+    std::cout << " hello world " << std::endl;
+  }
+  
+  XWindow::XWindow(const std::string& caption) :
+    gcn::Window(caption)
+  {
+    XWindow();
+  }
+  
+  XWindow::~XWindow()
+  {
     
-    }
-
-    void XWindow::close()
-    {
-        setVisible(false);
-    }
+  }
+  
+  void XWindow::close()
+  {
+    setVisible(false);
+  }
+  
   void XWindow::center()
   {
     
+  }
+
+  void XWindow::setShowCloseBtn(bool show)
+  {
+    mShowCloseBtn = show;
+  }
+
+  void XWindow::draw(gcn::Graphics *graphics)
+  {
+    gcn::Window::draw(graphics);
+    
+    if (mShowCloseBtn) {
+      mCloseRect.x = getWidth() - 20 - 5;
+      mCloseRect.y = 5;
+      mCloseRect.width = 20;
+      mCloseRect.height = 20;
+      graphics->drawText("X", mCloseRect.x, mCloseRect.y);
+    }
+  }
+
+  void XWindow::mousePressed(gcn::MouseEvent &event)
+  {
+    if (event.getSource() != this || event.isConsumed())
+      return;
+    if (event.getButton() == gcn::MouseEvent::LEFT) {
+      const int x = event.getX();
+      const int y = event.getY();
+      
+      if (mShowCloseBtn && mCloseRect.isPointInRect(x, y)) {
+	close();
+      }
+    }
+    
+    Window::mousePressed(event);
   }
 }
