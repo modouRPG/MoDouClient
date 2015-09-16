@@ -5,13 +5,12 @@ namespace modou
   XWindow::XWindow() : gcn::Window()
   {
     mShowCloseBtn = false;
-    std::cout << " hello world " << std::endl;
   }
   
   XWindow::XWindow(const std::string& caption) :
     gcn::Window(caption)
   {
-    XWindow();
+    mShowCloseBtn = false;
   }
   
   XWindow::~XWindow()

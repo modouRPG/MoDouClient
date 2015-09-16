@@ -18,6 +18,11 @@ namespace modou
 
   }
 
+  void TmxMap::setMapId(int id)
+  {
+    mapId = id;
+  }
+
   void TmxMap::setActor(XActor *actor)
   {
     m_pActor = actor;

@@ -18,6 +18,7 @@ namespace modou
 	return NULL;
       }
 
+      map->setMapId(1);
       map->loadResource();
       return map;
     }

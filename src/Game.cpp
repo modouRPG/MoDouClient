@@ -3,6 +3,7 @@
 #include "being/XSpirit.h"
 #include "gui/XViewport.h"
 #include "map/XMapReader.h"
+#include "gui/ChatWindow.h"
 
 namespace modou
 {
@@ -23,6 +24,9 @@ namespace modou
     gcn::Container *const top = static_cast<gcn::Container *>(globals::gui->getTop());
     viewport->setMap(globals::map);
     top->add(viewport);
+
+    globals::gChatWindow->setVisible(true);
+    top->add(globals::gChatWindow, 0, 399);
 
     mState = STATE_GAME;
   }

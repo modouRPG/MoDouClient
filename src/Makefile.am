@@ -57,5 +57,11 @@ modou_SOURCES=main.cpp \
 	gui/XListBox.h \
 	gui/XListBox.cpp \
 	gui/XListModel.h \
-	gui/XListModel.cpp
+	gui/XListModel.cpp \
+	gui/ChatWindow.h \
+	gui/ChatWindow.cpp \
+	net/MapConn.h \
+	net/MapConn.cpp
+
+
 

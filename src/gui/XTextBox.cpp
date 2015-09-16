@@ -8,6 +8,11 @@ namespace modou
     
   }
 
+  XTextBox::XTextBox(std::string txt) : gcn::TextBox(txt)
+  {
+
+  }
+
   XTextBox::~XTextBox()
   {
 

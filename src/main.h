@@ -5,10 +5,13 @@
 #include "font/XFont.h"
 #include "map/XMap.h"
 #include "net/LoginConn.h"
+#include "net/MapConn.h"
 #include "being/XLocalPlayer.h"
 #include "map/TmxMap.h"
 #include "Game.h"
 #include <stdint.h>
+#include "gui/ChatWindow.h"
+#include "gui/NpcDialog.h"
 
 namespace globals
 {
@@ -18,6 +21,9 @@ namespace globals
     extern modou::LoginConn *loginConn;
     extern modou::Game *gGame;
     extern uint64_t tick;
+    extern modou::NpcDialog *gNpcDlg;
+    extern modou::ChatWindow *gChatWindow;
+    extern modou::MapConn *mapConn;
 }
 
 static const int mapTileSize = 32;

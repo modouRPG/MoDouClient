@@ -31,6 +31,8 @@ namespace modou
     int click(int px, int py);
     XActor* clickNpc(int px, int py);
 
+    void setMapId(int id);
+
   private:
     std::vector< Tmx::Tile* > all_tiles;
     std::vector< gcn::Image* > all_tiles_image;
@@ -38,6 +40,7 @@ namespace modou
     std::vector< XActor* > actor_array;
     XActor *m_pActor;
     bool first;
+    int mapId;
   };
 }
 

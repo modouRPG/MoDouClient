@@ -9,8 +9,11 @@ gcn::Gui *(globals::gui) = new gcn::Gui();
 modou::TmxMap *(globals::map) = NULL;
 modou::XLocalPlayer *(globals::localPlayer) = NULL;
 modou::LoginConn *(globals::loginConn) = new modou::LoginConn("127.0.0.1", 2048);
+modou::MapConn *(globals::mapConn) = new modou::MapConn("127.0.0.1", 2049);
 modou::Game *(globals::gGame) = NULL;
 uint64_t globals::tick=0;
+modou::NpcDialog *(globals::gNpcDlg) = new modou::NpcDialog();
+modou::ChatWindow *(globals::gChatWindow) = new modou::ChatWindow();
 
 int main(int argc, char *argv[])
 {

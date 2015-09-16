@@ -8,6 +8,7 @@ namespace modou
   {
   public:
     XTextBox();
+    XTextBox(std::string txt);
     virtual ~XTextBox();
 
     void setTextWrapped(const std::string &text);

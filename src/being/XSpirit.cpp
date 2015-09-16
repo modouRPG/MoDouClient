@@ -41,10 +41,10 @@ namespace modou
     }
 
   void XSpirit::action() const {
-    NpcDialog *npc_dlg = new NpcDialog();
-    npc_dlg->setCaption(name);
+    globals::gNpcDlg->setCaption(name);
     gcn::Container *const top = static_cast<gcn::Container *>(globals::gui->getTop());
-    top->add(npc_dlg, 20, 40);
+    globals::gNpcDlg->setVisible(true);
+    top->add(globals::gNpcDlg, 20, 20);
     std::cout << "Click npc: " << name << std::endl;
   }
 }

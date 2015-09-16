@@ -6,12 +6,16 @@ namespace modou
     {
         setWidth(150);
         setHeight(getFont()->getHeight() + 4);
+	setBaseColor(gcn::Color(190, 208, 247, 128));
+	setBackgroundColor(gcn::Color(190, 208, 247, 128));
     }
 
     XTextField::XTextField(const std::string &text) : gcn::TextField(text)
     {
         setWidth(150);
         setHeight(getFont()->getHeight() + 4);
+	setBaseColor(gcn::Color(190, 208, 247, 128));
+	setBackgroundColor(gcn::Color(190, 208, 247, 128));
     }
 
     XTextField::~XTextField()
