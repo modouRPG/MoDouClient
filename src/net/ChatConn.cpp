@@ -1,4 +1,4 @@
-#include "MapConn.h"
+#include "ChatConn.h"
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -9,10 +9,12 @@
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include "main.h"
 
 namespace modou
 {
-  MapConn::MapConn(std::string ip, uint16_t port)
+  ChatConn::ChatConn(std::string ip, uint16_t port)
   {
     struct in_addr addr;
     int flag, ret;
@@ -34,45 +36,52 @@ namespace modou
     }
     flag = fcntl(mSock, F_GETFL, 0);
     fcntl(mSock, F_SETFL, flag | O_NONBLOCK);
+
+    arg.sock = mSock;
+    arg.chatWindow = globals::gChatWindow;
+    
+    pthread_create(&pid, NULL, ChatConn::chat_recev_thread, (void *)(&arg));
   }
   
-  MapConn::~MapConn()
+  ChatConn::~ChatConn()
   {
     
   }
 
-  int MapConn::netGetMapNpcs(std::vector< npc_info* > &npcs)
+  int ChatConn::sendMsg(std::string &msg)
   {
     int len;
-    int i;
-    get_npc_by_map_pos_pkg *pkg = (get_npc_by_map_pos_pkg *)calloc(1, sizeof(get_npc_by_map_pos_pkg));
 
-    pkg->flag = GET_NPC_BY_MAP_POS;
-    
-    npcs_list_pkg *pkg2 = (npcs_list_pkg *)calloc(1, sizeof(*pkg2));
-    std::cout << " send nget npc get pkg" << std::endl;
+    say_msg_pkg *pkg = (say_msg_pkg *)calloc(1, sizeof(*pkg));
+
+    pkg->flag = SAY_MSG;
+    strncpy(pkg->msg, msg.c_str(), 2047);
+
     send(mSock, pkg, sizeof(*pkg), 0);
-    std::cout << " send ok " << std::endl;
-    while(len = recv(mSock, pkg2, sizeof(*pkg2), 0 )) {
-      if (len > 0) {
-	std::cout << pkg2->num << std::endl;
-	for(i = 0; i < pkg2->num; i++) {
-	  npc_info *npc = (npc_info *)calloc(1, sizeof(npc_info));
-	  while(len = recv(mSock, npc, sizeof(*npc), 0)) {
-	    if (len > 0) {
-	      npcs.push_back(npc);
-	    } else {
-	      break;
-	    }
-	  }
-	}
-      } else {
-	break;
-      }
-    }
-    return 0;
   }
 
-  
-  
+  void* ChatConn::chat_recev_thread(void *data)
+  {
+    thread_arg *arg = (thread_arg *)data;
+    int len;
+    std::string mm;
+    msg_list_pkg *pkg = (msg_list_pkg *)calloc(1, sizeof(*pkg));
+
+    while(true) {
+      len = recv(arg->sock, pkg ,sizeof(*pkg), 0);
+      if (len > 0) {
+	switch(pkg->flag) {
+	case MSG_LIST:
+	  std::cout << pkg->msg << std::endl;
+	  mm = pkg->msg;
+	  arg->chatWindow->addMsg(mm);
+	  break;
+	}
+      } else {
+	sleep(1);
+      }
+    }
+    return NULL;
+  }
+
 }

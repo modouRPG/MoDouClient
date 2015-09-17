@@ -23,6 +23,7 @@ AC_CHECK_LIB([SDL_ttf], [TTF_Quit])
 AC_CHECK_LIB([guichan], [main])
 AC_CHECK_LIB([guichan_sdl], [main])
 AC_CHECK_LIB([tmxparser], [main])
+AC_CHECK_LIB([pthread], [main])
 
 # Checks for header files.
 AC_CHECK_HEADERS([SDL.h])

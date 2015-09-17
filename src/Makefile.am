@@ -61,7 +61,9 @@ modou_SOURCES=main.cpp \
 	gui/ChatWindow.h \
 	gui/ChatWindow.cpp \
 	net/MapConn.h \
-	net/MapConn.cpp
+	net/MapConn.cpp \
+	net/ChatConn.h \
+	net/ChatConn.cpp 
 
 
 

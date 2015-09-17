@@ -26,7 +26,7 @@ namespace modou
 
         serverAddr.sin_family = AF_INET;
         serverAddr.sin_addr.s_addr = addr.s_addr;
-        serverAddr.sin_port = htons(2048);
+        serverAddr.sin_port = htons(port);
 
         ret = connect(mSock, (struct sockaddr *)&serverAddr, sizeof(struct sockaddr));
         if (ret < 0) {
@@ -66,10 +66,13 @@ namespace modou
                         cout << "port :" << cs->port << endl;
                         cout << "num: " << cs->unum << endl;
                         break;
-                    }
+                    } else {
+		      break;
+		    }
                 }
-                break;
-            }
+            } else {
+	      break;
+	    }
         }
     }
 }

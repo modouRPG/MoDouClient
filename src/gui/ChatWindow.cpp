@@ -1,4 +1,5 @@
 #include "ChatWindow.h"
+#include "main.h"
 
 namespace modou
 {
@@ -44,6 +45,7 @@ namespace modou
 	} else {
 	  mTextBox->addRow(msg);
 	}
+	globals::chatConn->sendMsg(msg);
 	mSayTextField->setText("");
       }
     }
@@ -53,5 +55,17 @@ namespace modou
   void ChatWindow::keyPressed(gcn::KeyEvent &event)
   {
 
+  }
+
+  void ChatWindow::addMsg(std::string &msg)
+  {
+    mTextBox->addRow(msg);
+    if (!msg.empty()) {
+      if (mTextBox->getText().empty()) {
+	mTextBox->setTextRow(0, msg);
+      } else {
+	mTextBox->addRow(msg);
+      }
+    }
   }
 }

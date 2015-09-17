@@ -73,6 +73,19 @@ typedef struct _npcs_list_pkg
 }npcs_list_pkg;
 
 
+#define SAY_MSG (MIN_FLAG + 6)
+typedef struct _say_msg_pkg
+{
+  uint8_t flag;
+  char msg[2048];
+}say_msg_pkg;
+
+#define MSG_LIST (MIN_FLAG + 7)
+typedef struct _msg_list_pkg
+{
+  uint8_t flag;
+  char msg[2048];
+}msg_list_pkg;
 
 
 #endif

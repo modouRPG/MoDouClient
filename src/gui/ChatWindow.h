@@ -17,6 +17,8 @@ namespace modou
     void action(const gcn::ActionEvent &event);
     void keyPressed(gcn::KeyEvent &event);
 
+    void addMsg(std::string &msg);
+
   private:
     XTextBox *mTextBox;
     XTextField *mSayTextField;

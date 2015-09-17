@@ -1,9 +1,11 @@
 #include "TmxMap.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 #include "being/XActor.h"
 #include "being/XSpirit.h"
 #include "main.h"
+#include "net/pkg.h"
 
 namespace modou
 {
@@ -66,13 +68,20 @@ namespace modou
     }
 
     // TODO: load npcs from server;
-    XSpirit *sp = new XSpirit("老奶奶",
-			      "./data/img/aa2186.png",
-			      544,
-			      288,
-			      60,
-			      60);
-    actor_array.push_back(sp);
+    std::vector< npc_info* > npcs;
+    std::vector< npc_info* >::iterator it;
+    globals::mapConn->netGetMapNpcs(npcs);
+    for(it = npcs.begin(); it != npcs.end(); it++) {
+      std::cout << (*it)->name << std::endl;
+      std::cout << (*it)->posX << ":" << (*it)->posY << std::endl;
+      XSpirit *sp = new XSpirit((*it)->name,
+				"./data/img/aa2186.png",
+				(*it)->posX,
+				(*it)->posY,
+				(*it)->width,
+				(*it)->height);
+      actor_array.push_back(sp);
+    }
   }
 
   bool TmxMap::isBlock(int tx, int ty)
@@ -136,12 +145,15 @@ namespace modou
     int i=0, j=0, x=0, y=0;
     int ind = 0;
     std::string color = this->GetBackgroundColor();
+    gcn::Color old_color;
     gcn::Image *gcn_image = NULL;
     
     if (!color.empty()) {
       color.replace(0, 1, "0x");
       gcn::Color old_color = graphics->getColor();
-      graphics->setColor(gcn::Color(strtol(color.c_str(), NULL, 16)));
+      graphics->setColor(gcn::Color(strtol(color.c_str(),
+					   NULL,
+					   16)));
       graphics->fillRectangle(gcn::Rectangle(0, 0, width, height));
       graphics->setColor(old_color);
     }
@@ -151,18 +163,17 @@ namespace modou
       if (tileLayer->GetName() == "block") {
     	continue;
       }
-      y = scrollY/32 - 1 < 0 ? 0 : scrollY/32 -1;
-      x = scrollX/32 - 1 < 0 ? 0 : scrollX/32 - 1;
-      // for(; y<scrollY/32 + 1 + height/32 + 1; y++) {
-      // 	for(; x< scrollX/32 + 1 + width/32 + 1; x++) {
-      for(y = 0; y < tileLayer->GetHeight(); y++) {
-      	for(x = 0; x < tileLayer->GetWidth(); x++) {
+
+      for(y = (int)(floor(scrollY/32.0)); y<(int)(ceil(scrollY + height)/32.0); y++) {
+	for(x = (int)(floor(scrollX/32.0)); x<(int)(ceil(scrollX + width)/32.0); x++) {
     	  if (tileLayer->GetTileTilesetIndex(x, y) == -1) {
     	    //	    printf("..........      ");
     	  } else {
     	    ind = tileLayer->GetTileGid(x, y) - 1;
     	    gcn_image = all_tiles_image.at(ind);
-    	    graphics->drawImage(gcn_image, x * 32 - scrollX, y * 32 - scrollY);
+    	    graphics->drawImage(gcn_image,
+				x * 32 - scrollX,
+				y * 32 - scrollY);
     	  }
     	}
       }
@@ -180,7 +191,9 @@ namespace modou
 	    object->GetX() - scrollX <= width &&
 	    object->GetY() - scrollY >= 0 &&
 	    object->GetY() - scrollY <= height) {
-	  graphics->drawImage(gcn::Image::load(image->GetSource(), true), object->GetX() - scrollX, object->GetY() - scrollY);
+	  graphics->drawImage(gcn::Image::load(image->GetSource(), true),
+			      object->GetX() - scrollX,
+			      object->GetY() - scrollY);
 	}
       }
     }
@@ -193,6 +206,9 @@ namespace modou
       m_pActor->draw(graphics, -scrollX, -scrollY);
     }
 
+    old_color = graphics->getColor();
+    graphics->setColor(gcn::Color(255, 255, 0));
     graphics->drawText(map_name, 800/2, 80, gcn::Graphics::CENTER);
+    graphics->setColor(old_color);
   }
 }

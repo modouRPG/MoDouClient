@@ -6,6 +6,7 @@
 #include "map/XMap.h"
 #include "net/LoginConn.h"
 #include "net/MapConn.h"
+#include "net/ChatConn.h"
 #include "being/XLocalPlayer.h"
 #include "map/TmxMap.h"
 #include "Game.h"
@@ -24,6 +25,7 @@ namespace globals
     extern modou::NpcDialog *gNpcDlg;
     extern modou::ChatWindow *gChatWindow;
     extern modou::MapConn *mapConn;
+    extern modou::ChatConn *chatConn;
 }
 
 static const int mapTileSize = 32;
