@@ -14,10 +14,9 @@ namespace modou
     globals::map = XMapReader::readMap(default_map);
     globals::map->map_name = "平安镇";
     
-    globals::localPlayer = new XLocalPlayer();
-    XVector pos(100, 100, 0);
-    globals::localPlayer->setPosition(pos);
-    globals::localPlayer->setMap(globals::map);
+    if (globals::localPlayer) {
+      globals::localPlayer->setMap(globals::map);
+    }
     
     viewport = new XViewport();
     viewport->setSize(800, 600);

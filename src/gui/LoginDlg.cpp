@@ -66,6 +66,10 @@ namespace modou
 	    //top->remove(this);
 	    //top->add(wsDlg, (top->getWidth() - this->getWidth()) / 2, (top->getHeight() - this->getHeight())/2);
 	    //mGame = new Game();
+	    globals::localPlayer = new XLocalPlayer();
+	    XVector pos(100, 100, 0);
+	    globals::localPlayer->setPosition(pos);
+	    globals::localPlayer->name = u;
 	    globals::gGame = new Game();
         } else if (eventId == "register") {
 

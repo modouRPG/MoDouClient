@@ -46,3 +46,7 @@ Defined in main.cpp
 1. header width height tilewidth tileheight
 2. layer info
 
+
+值得参考的其他游戏
+===================
+1. tome http://te4.org/

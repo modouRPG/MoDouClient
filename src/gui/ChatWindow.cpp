@@ -41,9 +41,9 @@ namespace modou
       std::string msg = mSayTextField->getText();
       if (!msg.empty()) {
 	if (mTextBox->getText().empty()) {
-	  mTextBox->setTextRow(0, msg);
+	  mTextBox->setTextRow(0, globals::localPlayer->name + ": " + msg);
 	} else {
-	  mTextBox->addRow(msg);
+	  mTextBox->addRow(globals::localPlayer->name + ": " + msg);
 	}
 	globals::chatConn->sendMsg(msg);
 	mSayTextField->setText("");
@@ -62,9 +62,9 @@ namespace modou
     mTextBox->addRow(msg);
     if (!msg.empty()) {
       if (mTextBox->getText().empty()) {
-	mTextBox->setTextRow(0, msg);
+	mTextBox->setTextRow(0, globals::localPlayer->name + ": " + msg);
       } else {
-	mTextBox->addRow(msg);
+	mTextBox->addRow(globals::localPlayer->name + ": " + msg);
       }
     }
   }
